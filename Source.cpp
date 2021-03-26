@@ -19,12 +19,21 @@ void showOptionsLogedIn() {
 		<< "0. Exit" << endl;
 }
 
-bool isAvailable(string username, vector<User> user) {
+bool isAvailable(const string username, vector<User> user) {
 	for (unsigned int i = 0; i < user.size(); i++) {
 		if (username == user[i].getUsername())
 			return false;
 	}
 	return true;
+}
+
+int logIn(const string& username, const string& password, vector<User> &user) {
+	for (unsigned int i = 0; i < user.size(); i++) {
+		if (user[i].cmp(username, password)) 
+			return i;
+		}
+	cout << "Incorrect username or password" << endl << endl;
+	return -1;
 }
 
 int main() {
@@ -74,17 +83,13 @@ int main() {
 				cout << "Input password: ";
 				cin >> tmpPassword;
 				cout << endl;
-
-				for (unsigned int i = 0; i < user.size(); i++) {
-					if (user[i].cmp(tmpUsername, tmpPassword)) {
-						cout << "Hello, " << user[i].getName() << ", welcome back" << endl << endl;
-						logedIn = true;
-						id = i;
-					}
-					else {
-						cout << "Incorrect username or password" << endl << endl;
-					}
-				}
+				id = logIn(tmpUsername, tmpPassword, user);
+				if(id > -1) {
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
+				logedIn = true;
+				} else {
+				cout << "Incorrect username or password" << endl << endl;
+			    }
 
 			} else {
 				cout << "Signed out" << endl << endl;
