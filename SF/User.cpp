@@ -13,4 +13,7 @@ bool User::cmp(std::string username, std::string password)
 	else return false;
 
 }
-bool checkAvailability(std::string username);
+void User::OutMessage(std::string out_message)
+{
+	_out_message[_countOutMessage++] = out_message;
+}
