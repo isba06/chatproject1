@@ -1,9 +1,15 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
 #include <Windows.h>
 #include <string>
 #include <exception>
 #include <vector>
 #include <algorithm>
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include "User.h"
 using namespace std;
 
@@ -56,6 +62,16 @@ int findSessionNum(vector<User>& user, const string& userSession) {
 	return -1;
 }
 
+void getTime()
+{
+	auto now = std::chrono::system_clock::now();
+	auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+	std::stringstream ss;
+	ss << put_time(localtime(&in_time_t), "%Y-%m-%d %X");
+	cout<< ss.str();
+}
+
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -64,7 +80,7 @@ int main() {
 	unsigned int ans, count = 0, size = 0, sessionNum = -1;
 	bool logedIn = false;
 	vector<User> user(size);
-	vector<string>::iterator it;
+	
 
 	do {
 		if (logedIn) {
@@ -88,7 +104,7 @@ int main() {
 			if (isBusy(tmpUsername, user)) {
 				cout << "This username is already taken" << endl << endl;
 				break;
-			}
+			} 
 
 			cout << "Input password: ";
 			cin >> tmpPassword;
@@ -105,6 +121,7 @@ int main() {
 				cout << "Input password: ";
 				cin >> tmpPassword;
 				cout << endl;
+
 				userSession = logIn(tmpUsername, tmpPassword, user);
 				if (userSession != "") {
 					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
@@ -142,11 +159,12 @@ int main() {
 
 			cout << "To exit input 0" << endl;
 			do {
-				cout << "Message: ";
-				cin >> message;
+				getTime();
+				cout << " | " << "You: ";
+				getline(cin, message);
 				//user[sessionNum].sendMessage(reciever);
 			} while (message != "0");
-
+			cout << endl;
 
 			break;
 
