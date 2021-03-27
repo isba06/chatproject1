@@ -1,6 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
+using namespace std;
+
+
+
 class User
 {
 private:
@@ -21,5 +25,4 @@ public:
 	bool cmp(std::string username, std::string password);
 	std::string getName();
 	std::string getUsername();
-
 };
