@@ -20,12 +20,12 @@ void showOptionsLogedIn() {
 		<< "0. Exit" << endl;
 }
 
-bool isAvailable(const string& username, vector<User>& user) {
+bool isBusy(const string& username, vector<User>& user) {
 	for (unsigned int i = 0; i < user.size(); i++) {
 		if (username == user[i].getUsername())
-			return false;
+			return true;
 	}
-	return true;
+	return false;
 }
 
 string logIn(const string& username, const string& password, vector<User>& user) {
@@ -85,7 +85,7 @@ int main() {
 
 			cout << "Input username: ";
 			cin >> tmpUsername;
-			if (!isAvailable(tmpUsername, user)) {
+			if (isBusy(tmpUsername, user)) {
 				cout << "This username is already taken" << endl << endl;
 				break;
 			}
