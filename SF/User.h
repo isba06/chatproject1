@@ -4,8 +4,6 @@
 #include "Message.h"
 using namespace std;
 
-
-
 class User
 {
 private:
@@ -14,7 +12,7 @@ private:
 	std::string _username;
 	std::string _password;
 	vector<Message> _message;
-	static int _countMessage;
+	//int _countMessage;
 public:
 	void registr(std::string name, std::string username, std::string password);
 	User() = default;
@@ -24,5 +22,6 @@ public:
 	bool cmp(std::string username, std::string password);
 	std::string getName();
 	std::string getUsername();
-	void sendMessage(Message message);
+	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage);
+	void showMessage();
 };

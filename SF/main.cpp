@@ -11,67 +11,9 @@
 #include <sstream>
 #include <iomanip>
 #include "User.h"
+#include "functions.h"
 using namespace std;
 
-void showOptions() {
-	cout << "1. Sign in" << endl
-		<< "2. Log in" << endl
-		<< "0. Exit" << endl;
-}
-
-void showOptionsLogedIn() {
-	cout << "2. Log out" << endl
-		<< "3. Send message to user" << endl
-		<< "4. Send message to everyone" << endl
-		<< "0. Exit" << endl;
-}
-
-bool isBusy(const string& username, vector<User>& user) {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if (username == user[i].getUsername())
-			return true;
-	}
-	return false;
-}
-
-string logIn(const string& username, const string& password, vector<User>& user) {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if (user[i].cmp(username, password))
-			return user[i].getUsername();
-	}
-	cout << "Incorrect username or password" << endl << endl;
-	return "";
-}
-
-string findUser(const string& username, vector<User>& user) {
-	string reciever;
-	for (unsigned int i = 0; i < user.size(); i++) {
-		reciever = user[i].getUsername();
-		if (reciever == username) {
-			return reciever;
-		}
-	}
-	return "Not found";
-}
-
-int findSessionNum(vector<User>& user, const string& userSession) {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if (user[i].getUsername() == userSession)
-			return i;
-	}
-	return -1;
-}
-
-string getTime()
-{
-	auto now = std::chrono::system_clock::now();
-	auto in_time_t = std::chrono::system_clock::to_time_t(now);
-
-	stringstream ss;
-	struct tm* ptm = localtime(&in_time_t);
-	ss << put_time(ptm, "%d-%m-%y %R");
-	return ss.str();
-}
 
 int main() {
 	SetConsoleCP(1251);
@@ -79,7 +21,7 @@ int main() {
 
 	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, userSession;
 	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1;
+	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0;
 	bool logedIn = false;
 	vector<User> user(size);
 
@@ -87,9 +29,11 @@ int main() {
 	do {
 		if (logedIn) {
 			showOptionsLogedIn();
+			sessionNum = findSessionNum(user, userSession);
 		}
 		else {
 			showOptions();
+			sessionNum = -1;
 		}
 		cout << "Select action: ";
 		cin >> ans;
@@ -113,7 +57,7 @@ int main() {
 			cout << endl;
 
 			user.resize(++size);
-			user[++count].registr(tmpName, tmpUsername, tmpPassword);
+			user[count++].registr(tmpName, tmpUsername, tmpPassword);
 			break;
 
 		case '2':
@@ -157,17 +101,18 @@ int main() {
 				break;
 			}
 
-			sessionNum = findSessionNum(user, userSession);
-
 			cout << "To exit input 0" << endl;
-			while (message != "0"); {
+			while (message != "0") {
 				cout << getTime() << " | " << "You: ";
 				getline(cin, message);
 				if (message == "0") {
-					message == "";
+					message = "";
 					break;
 				}
-				//user[sessionNum].sendMessage(reciever);
+				if (message == "")
+					getline(cin, message);
+				user[sessionNum].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
+				user[findSessionNum(user, reciever)].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
 			}
 
 			cout << endl;
@@ -179,6 +124,14 @@ int main() {
 				cout << "Select action from the list" << endl << endl;
 				break;
 			}
+			break;
+
+		case '5':
+			if (!logedIn) {
+				cout << "Select action from the list" << endl << endl;
+				break;
+			}
+			user[sessionNum].showMessage();
 			break;
 
 		case '0':
