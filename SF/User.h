@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Message.h"
 using namespace std;
 
 
@@ -12,10 +13,8 @@ private:
 	std::string _name;
 	std::string _username;
 	std::string _password;
-	int _countInMessage; //порядковый номер для входящего сообщения
-	int _countOutMessage;
-	std::vector<std::string> _in_message;
-	std::vector<std::string> _out_message;
+	vector<Message> _message;
+	static int _countMessage;
 public:
 	void registr(std::string name, std::string username, std::string password);
 	User() = default;
@@ -25,4 +24,5 @@ public:
 	bool cmp(std::string username, std::string password);
 	std::string getName();
 	std::string getUsername();
+	void sendMessage(Message message);
 };

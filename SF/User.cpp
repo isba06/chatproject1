@@ -3,13 +3,6 @@
 
 
 
-void User::inMessage(std::string in_message)
-{
-	_in_message[_countInMessage++] = in_message;
-}
-
-
-
 bool User::cmp(std::string username, std::string password)
 {
 	if ((_username == username) && (password == _password))
@@ -17,14 +10,6 @@ bool User::cmp(std::string username, std::string password)
 	else return false;
 
 }
-
-
-
-void User::OutMessage(std::string out_message)
-{
-	_out_message[_countOutMessage++] = out_message;
-}
-
 
 
 std::string User::getName()
@@ -47,7 +32,10 @@ void User::registr(std::string name, std::string username, std::string password)
 	_name = name;
 	_username = username;
 	_password = password;
-	_countInMessage = 0;
-	_countOutMessage = 0;
 }
 
+void User::sendMessage(Message message)
+{	
+	
+	_message[_countMessage++] = message;
+}
