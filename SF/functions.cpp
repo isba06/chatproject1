@@ -39,7 +39,7 @@ bool isBusy(const string& username, vector<User>& user) {
 
 string logIn(const string& username, const string& password, vector<User>& user) {
 	for (unsigned int i = 0; i < user.size(); i++) {
-		if (user[i].cmp(username, password))
+		if (user[i].checkPasswordUsername(username, password))
 			return user[i].getUsername();
 	}
 	cout << "Incorrect username or password" << endl << endl;

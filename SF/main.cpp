@@ -106,7 +106,7 @@ int main() {
 				cout << getTime() << " | " << "You: ";
 				getline(cin, message);
 				if (message == "0") {
-					message = "";
+					message = "";		//зачем
 					break;
 				}
 				if (message == "")

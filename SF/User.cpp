@@ -3,7 +3,7 @@
 #include "functions.h"
 
 
-bool User::cmp(std::string username, std::string password)
+bool User::checkPasswordUsername(std::string username, std::string password)
 {
 	if ((_username == username) && (password == _password))
 		return true;
@@ -45,7 +45,7 @@ void User::sendMessage(const string sender, const string reciever, const string 
 }
 
 void User::showMessage() {
-	for (auto a : _message) {
+	for (auto a : _message) { //что тут делается
 		if (a.getMessage() == "")
 			continue;
 		cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
