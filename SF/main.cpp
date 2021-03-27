@@ -142,12 +142,12 @@ int main() {
 
 			cout << "To exit input 0" << endl;
 
-				//user[sessionNum].sendMessage(reciever);
-			while (message != "0")
-			{
+			//user[sessionNum].sendMessage(reciever);
+			do{
+
 				cout << "Message: ";
 				getline(cin, message);
-			}
+			} while (message != "0");
 
 			break;
 
