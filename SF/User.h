@@ -19,9 +19,13 @@ public:
 	void registr(std::string name, std::string username, std::string password);
 	User() = default;
 	~User() = default;
-	void inMessage(std::string);
-	void OutMessage(std::string);
-	bool cmp(std::string username, std::string password);
+	bool checkPasswordUsername(std::string username, std::string password)
+	{
+		if ((_username == username) && (password == _password))
+			return true;
+		else return false;
+
+	}
 	std::string getName();
 	std::string getUsername();
 	void sendMessage(Message message);
