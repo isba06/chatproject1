@@ -148,7 +148,7 @@ int main() {
 			do{
 
 				cout << "Message: "<<endl;
-				//getline(cin, message);
+				getline(cin, message);
 
 			} while (message != "0");
 
