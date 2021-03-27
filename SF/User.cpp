@@ -1,6 +1,6 @@
 #include <iostream>
 #include "User.h"
-
+#include "functions.h"
 
 
 bool User::cmp(std::string username, std::string password)
@@ -34,8 +34,21 @@ void User::registr(std::string name, std::string username, std::string password)
 	_password = password;
 }
 
-void User::sendMessage(Message message)
+void User::sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage)
 {	
+	_message.resize(countMessage);
+	_message[countMessage - 1].setSender(sender);
+	_message[countMessage - 1].setAddressee(reciever);
+	_message[countMessage - 1].setMessage(message);
+	_message[countMessage - 1].setTime(getTime());
 	
-	_message[_countMessage++] = message;
+}
+
+void User::showMessage() {
+	for (auto a : _message) {
+		if (a.getMessage() == "")
+			continue;
+		cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
+	}
+	cout << endl;
 }

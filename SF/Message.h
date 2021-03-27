@@ -14,5 +14,9 @@ public:
 	string getAddressee();
 	string getMessage();
 	string getTime();
+	void setSender(string sender);
+	void setAddressee(string addressee);
+	void setMessage(string message);
+	void setTime(string time);
 };
 
