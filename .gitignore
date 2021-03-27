@@ -9,3 +9,5 @@ User.h
 SF
 .md
 .sln
+.vcxproj.filters
+.vcxproj
