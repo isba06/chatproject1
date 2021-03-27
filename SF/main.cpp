@@ -62,14 +62,15 @@ int findSessionNum(vector<User>& user, const string& userSession) {
 	return -1;
 }
 
-void getTime()
+string getTime()
 {
 	auto now = std::chrono::system_clock::now();
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
 
-	std::stringstream ss;
-	ss << put_time(localtime(&in_time_t), "%Y-%m-%d %X");
-	cout<< ss.str();
+	stringstream ss;
+	struct tm* ptm = localtime(&in_time_t);
+	ss << put_time(ptm, "%d-%m-%y %R");
+	return ss.str();
 }
 
 int main() {
@@ -77,7 +78,8 @@ int main() {
 	SetConsoleOutputCP(1251);
 
 	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, userSession;
-	unsigned int ans, count = 0, size = 0, sessionNum = -1;
+	char ans;
+	unsigned int count = 0, size = 0, sessionNum = -1;
 	bool logedIn = false;
 	vector<User> user(size);
 	
@@ -95,7 +97,7 @@ int main() {
 
 		switch (ans)
 		{
-		case 1:
+		case '1':
 			cout << "Input name: ";
 			cin >> tmpName;
 
@@ -111,10 +113,10 @@ int main() {
 			cout << endl;
 
 			user.resize(++size);
-			user[count].registr(tmpName, tmpUsername, tmpPassword);
+			user[++count].registr(tmpName, tmpUsername, tmpPassword);
 			break;
 
-		case 2:
+		case '2':
 			if (!logedIn) {
 				cout << "Input username: ";
 				cin >> tmpUsername;
@@ -139,7 +141,7 @@ int main() {
 			}
 			break;
 
-		case 3:
+		case '3':
 			if (!logedIn) {
 				cout << "Select action from the list" << endl << endl;
 				break;
@@ -158,24 +160,28 @@ int main() {
 			sessionNum = findSessionNum(user, userSession);
 
 			cout << "To exit input 0" << endl;
-			do {
-				getTime();
-				cout << " | " << "You: ";
+			while (message != "0"); {
+				cout << getTime() << " | " << "You: ";
 				getline(cin, message);
+				if (message == "0") {
+					message == "";
+					break;
+				}
 				//user[sessionNum].sendMessage(reciever);
-			} while (message != "0");
+			}
+
 			cout << endl;
 
 			break;
 
-		case 4:
+		case '4':
 			if (!logedIn) {
 				cout << "Select action from the list" << endl << endl;
 				break;
 			}
 			break;
 
-		case 0:
+		case '0':
 			ans = 0;
 			break;
 
