@@ -1,9 +1,15 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
 #include <Windows.h>
 #include <string>
 #include <exception>
 #include <vector>
 #include <algorithm>
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include "User.h"
 using namespace std;
 
@@ -29,14 +35,12 @@ bool isBusy(const string& username, vector<User>& user) {
 }
 
 string logIn(const string& username, const string& password, vector<User>& user) {
-	for (unsigned int i = 0; i < user.size(); i++)
-	{
+	for (unsigned int i = 0; i < user.size(); i++) {
 		if (user[i].cmp(username, password))
 			return user[i].getUsername();
 	}
-		cout << "Incorrect username or password" << endl << endl;
-		return "";
-
+	cout << "Incorrect username or password" << endl << endl;
+	return "";
 }
 
 string findUser(const string& username, vector<User>& user) {
@@ -58,15 +62,27 @@ int findSessionNum(vector<User>& user, const string& userSession) {
 	return -1;
 }
 
+string getTime()
+{
+	auto now = std::chrono::system_clock::now();
+	auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+	stringstream ss;
+	struct tm* ptm = localtime(&in_time_t);
+	ss << put_time(ptm, "%d-%m-%y %R");
+	return ss.str();
+}
+
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
 	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, userSession;
-	unsigned int ans, count = 0, size = 0, sessionNum = -1;
+	char ans;
+	unsigned int count = 0, size = 0, sessionNum = -1;
 	bool logedIn = false;
 	vector<User> user(size);
-	vector<string>::iterator it;
+
 
 	do {
 		if (logedIn) {
@@ -81,7 +97,7 @@ int main() {
 
 		switch (ans)
 		{
-		case 1:
+		case '1':
 			cout << "Input name: ";
 			cin >> tmpName;
 
@@ -97,16 +113,17 @@ int main() {
 			cout << endl;
 
 			user.resize(++size);
-			user[count++].registr(tmpName, tmpUsername, tmpPassword);
+			user[++count].registr(tmpName, tmpUsername, tmpPassword);
 			break;
 
-		case 2:
+		case '2':
 			if (!logedIn) {
 				cout << "Input username: ";
 				cin >> tmpUsername;
 				cout << "Input password: ";
 				cin >> tmpPassword;
 				cout << endl;
+
 				userSession = logIn(tmpUsername, tmpPassword, user);
 				if (userSession != "") {
 					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
@@ -124,7 +141,7 @@ int main() {
 			}
 			break;
 
-		case 3:
+		case '3':
 			if (!logedIn) {
 				cout << "Select action from the list" << endl << endl;
 				break;
@@ -143,25 +160,28 @@ int main() {
 			sessionNum = findSessionNum(user, userSession);
 
 			cout << "To exit input 0" << endl;
-
-			//user[sessionNum].sendMessage(reciever);
-			do{
-
-				cout << "Message: "<<endl;
+			while (message != "0"); {
+				cout << getTime() << " | " << "You: ";
 				getline(cin, message);
+				if (message == "0") {
+					message == "";
+					break;
+				}
+				//user[sessionNum].sendMessage(reciever);
+			}
 
-			} while (message != "0");
+			cout << endl;
 
 			break;
 
-		case 4:
+		case '4':
 			if (!logedIn) {
 				cout << "Select action from the list" << endl << endl;
 				break;
 			}
 			break;
 
-		case 0:
+		case '0':
 			ans = 0;
 			break;
 
