@@ -3,58 +3,68 @@
 #include <string>
 #include <exception>
 #include <vector>
+#include <algorithm>
 #include "User.h"
 using namespace std;
 
-string tmpUsername, tmpName, tmpPassword;
-int ans, count = 0, size = 0, id = -1;
-bool logedIn = false;
-vector<User> user(::size);
 void showOptions() {
-	cout << "1. Регистрация" << endl
-		<< "2. Вход" << endl
-		<< "0. Выйти из программы" << endl;
+	cout << "1. Sign in" << endl
+		<< "2. Log in" << endl
+		<< "0. Exit" << endl;
 }
 
 void showOptionsLogedIn() {
-	cout << "2. Выход" << endl
-		<< "3. Отправить сообщение пользователю" << endl
-		<< "4. Отправить сообщение всем пользователям" << endl
-		<< "0. Выйти из программы" << endl;
+	cout << "2. Log out" << endl
+		<< "3. Send message to user" << endl
+		<< "4. Send message to everyone" << endl
+		<< "0. Exit" << endl;
 }
 
-bool isAvailable(string username, vector<User> user) {
-	for (int i = 0; i < user.size(); i++) {
+bool isAvailable(const string& username, vector<User>& user) {
+	for (unsigned int i = 0; i < user.size(); i++) {
 		if (username == user[i].getUsername())
 			return false;
 	}
 	return true;
 }
 
-
-bool signup() {
-	cout << "Введите имя: ";
-	cin >> tmpName;
-
-	cout << "Введите логин: ";
-	cin >> tmpUsername;
-	if (!isAvailable(tmpUsername, user)) {
-		cout << "Этот логин уже используется" << endl << endl;
-		return false;
+string logIn(const string& username, const string& password, vector<User>& user) {
+	for (unsigned int i = 0; i < user.size(); i++) {
+		if (user[i].cmp(username, password))
+			return user[i].getUsername();
 	}
+	cout << "Incorrect username or password" << endl << endl;
+	return "";
+}
 
-	cout << "Введите пароль: ";
-	cin >> tmpPassword;
-	cout << endl;
+string findUser(const string& username, vector<User>& user) {
+	string reciever;
+	for (unsigned int i = 0; i < user.size(); i++) {
+		reciever = user[i].getUsername();
+		if (reciever == username) {
+			return reciever;
+		}
+	}
+	return "Not found";
+}
 
-	user.resize(++::size);
-	user[::count].registr(tmpName, tmpUsername, tmpPassword);
-	return true;
+int findSessionNum(vector<User>& user, const string& userSession) {
+	for (unsigned int i = 0; i < user.size(); i++) {
+		if (user[i].getUsername() == userSession)
+			return i;
+	}
+	return -1;
 }
 
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
+	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, userSession;
+	unsigned int ans, count = 0, size = 0, sessionNum = -1;
+	bool logedIn = false;
+	vector<User> user(size);
+	vector<string>::iterator it;
 
 	do {
 		if (logedIn) {
@@ -63,55 +73,86 @@ int main() {
 		else {
 			showOptions();
 		}
-		cout << "Выберете действие: ";
+		cout << "Select action: ";
 		cin >> ans;
 		cout << endl;
 
 		switch (ans)
 		{
 		case 1:
-			signup();
+			cout << "Input name: ";
+			cin >> tmpName;
+
+			cout << "Input username: ";
+			cin >> tmpUsername;
+			if (!isAvailable(tmpUsername, user)) {
+				cout << "This username is already taken" << endl << endl;
+				break;
+			}
+
+			cout << "Input password: ";
+			cin >> tmpPassword;
+			cout << endl;
+
+			user.resize(++size);
+			user[count].registr(tmpName, tmpUsername, tmpPassword);
 			break;
 
 		case 2:
 			if (!logedIn) {
-				cout << "Введите логин: ";
+				cout << "Input username: ";
 				cin >> tmpUsername;
-				cout << "Введите пароль: ";
+				cout << "Input password: ";
 				cin >> tmpPassword;
 				cout << endl;
-
-				for (int i = 0; i < user.size(); i++) {
-					if (user[i].cmp(tmpUsername, tmpPassword)) {
-						cout << "Здравствуйте, " << user[i].getName() << ", вы вошли в систему" << endl << endl;
-						logedIn = true;
-						id = i;
-					}
-					else {
-						cout << "Неправильный логин или пароль" << endl << endl;
-					}
+				userSession = logIn(tmpUsername, tmpPassword, user);
+				if (userSession != "") {
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
+					logedIn = true;
+				}
+				else {
+					break;
 				}
 
 			}
 			else {
-				cout << "Вы вышли из системы" << endl << endl;
-				id = -1;
+				cout << "Signed out" << endl << endl;
+				userSession = "";
 				logedIn = false;
 			}
 			break;
 
 		case 3:
 			if (!logedIn) {
-				cout << "Выберете действие из списка" << endl << endl;
+				cout << "Select action from the list" << endl << endl;
 				break;
 			}
-			cout << "Введите логин пользователя: ";
+			cout << "Input reciever's username: ";
+			cin >> tmpUsername;
+			cout << endl;
+
+			reciever = findUser(tmpUsername, user);
+			if (reciever == "Not found") {
+				cout << "User not found" << endl << endl;
+				reciever = "";
+				break;
+			}
+
+			sessionNum = findSessionNum(user, userSession);
+
+			cout << "To exit input 0" << endl;
+			do {
+				cout << "Message: ";
+				cin >> message;
+				//user[sessionNum].sendMessage(reciever);
+			} while (message != "0");
+
 
 			break;
 
 		case 4:
 			if (!logedIn) {
-				cout << "Выберете действие из списка" << endl << endl;
+				cout << "Select action from the list" << endl << endl;
 				break;
 			}
 			break;
@@ -121,7 +162,7 @@ int main() {
 			break;
 
 		default:
-			cout << "Выберете действие из списка" << endl << endl;
+			cout << "Select action from the list" << endl << endl;
 			break;
 		}
 	} while (ans != 0);
