@@ -141,12 +141,13 @@ int main() {
 			sessionNum = findSessionNum(user, userSession);
 
 			cout << "To exit input 0" << endl;
-			do {
-				cout << "Message: ";
-				cin >> message;
-				//user[sessionNum].sendMessage(reciever);
-			} while (message != "0");
 
+				//user[sessionNum].sendMessage(reciever);
+			while (message != "0")
+			{
+				cout << "Message: ";
+				getline(cin, message);
+			}
 
 			break;
 
