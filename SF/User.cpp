@@ -51,10 +51,3 @@ void User::registr(std::string name, std::string username, std::string password)
 	_countOutMessage = 0;
 }
 
-
-/*
-bool User::logIn(string username, string password)
-{
-	if((_username == username)&&(_password == password))
-		return true;
-}*/

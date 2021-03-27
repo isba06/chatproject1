@@ -25,5 +25,4 @@ public:
 	bool cmp(std::string username, std::string password);
 	std::string getName();
 	std::string getUsername();
-	//bool logIn(string username, string password);
 };

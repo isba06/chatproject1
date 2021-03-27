@@ -29,12 +29,14 @@ bool isBusy(const string& username, vector<User>& user) {
 }
 
 string logIn(const string& username, const string& password, vector<User>& user) {
-	for (unsigned int i = 0; i < user.size(); i++) {
+	for (unsigned int i = 0; i < user.size(); i++)
+	{
 		if (user[i].cmp(username, password))
 			return user[i].getUsername();
 	}
-	cout << "Incorrect username or password" << endl << endl;
-	return "";
+		cout << "Incorrect username or password" << endl << endl;
+		return "";
+
 }
 
 string findUser(const string& username, vector<User>& user) {
@@ -95,7 +97,7 @@ int main() {
 			cout << endl;
 
 			user.resize(++size);
-			user[count].registr(tmpName, tmpUsername, tmpPassword);
+			user[count++].registr(tmpName, tmpUsername, tmpPassword);
 			break;
 
 		case 2:
@@ -145,8 +147,9 @@ int main() {
 			//user[sessionNum].sendMessage(reciever);
 			do{
 
-				cout << "Message: ";
-				getline(cin, message);
+				cout << "Message: "<<endl;
+				//getline(cin, message);
+
 			} while (message != "0");
 
 			break;
