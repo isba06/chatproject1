@@ -28,7 +28,6 @@ int main() {
 
 	do {
 
-
 		if (!logedIn) {			
 		
 		showOptions();
@@ -68,9 +67,6 @@ int main() {
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
 					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
 					logedIn = true;
-					
-				}
-				else {
 					break;
 				}
 				break;
@@ -117,8 +113,8 @@ int main() {
 						}
 						if (message == "")
 							getline(cin, message);
-						user[sessionNum].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
-						user[findSessionNum(user, reciever)].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
+						user[sessionNum].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage, true);
+						user[findSessionNum(user, reciever)].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage, true);
 					}
 					cout << endl;
 					break;
@@ -135,7 +131,7 @@ int main() {
 						if (message == "")
 							getline(cin, message);
 						for (unsigned int i = 0; i < user.size(); i++) {
-							user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage);
+							user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
 						}
 					}
 					cout << endl;
