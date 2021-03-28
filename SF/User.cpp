@@ -3,26 +3,6 @@
 #include "functions.h"
 
 
-bool User::checkPasswordUsername(std::string username, std::string password)
-{
-	if ((_username == username) && (password == _password))
-		return true;
-	else return false;
-
-}
-
-
-std::string User::getName()
-{
-	return _name;
-}
-
-
-
-std::string User::getUsername()
-{
-	return _username;
-}
 
 
 
