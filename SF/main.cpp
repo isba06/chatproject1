@@ -114,9 +114,7 @@ int main() {
 				user[sessionNum].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
 				user[findSessionNum(user, reciever)].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage);
 			}
-
 			cout << endl;
-
 			break;
 
 		case '4':
@@ -124,6 +122,21 @@ int main() {
 				cout << "Select action from the list" << endl << endl;
 				break;
 			}
+			cout << "To exit input 0" << endl;
+			while (message != "0") {
+				cout << getTime() << " | " << "You: ";
+				getline(cin, message);
+				if (message == "0") {
+					message = "";
+					break;
+				}
+				if (message == "")
+					getline(cin, message);
+				for (unsigned int i = 0; i < user.size(); i++) {
+					user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage);
+				}
+			}
+			cout << endl;
 			break;
 
 		case '5':
