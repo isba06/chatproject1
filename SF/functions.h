@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include "functions.h"
 #include <iostream>
@@ -19,9 +19,11 @@ void showOptionsLogedIn();
 
 bool isBusy(const string& username, vector<User>& user);
 
-bool checkPasswordUsername(std::string username, std::string password, vector<User>& user); //проверка корректности пароля и логина
+bool checkPasswordUsername(std::string username, std::string password, vector<User>& user); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 string findUser(const string& username, vector<User>& user);
+
+int getIndexUser(string, vector<User>& user);
 
 int findSessionNum(vector<User>& user, const string& userSession);
 

@@ -28,16 +28,16 @@ int main() {
 
 	do {
 
-		if (!logedIn) {			
-		
-		showOptions();
-		sessionNum = -1;
-		cout << "Select action: ";
-		cin >> ans;
-		cout << endl;
+		if (!logedIn) {
+
+			showOptions();
+			sessionNum = -1;
+			cout << "Select action: ";
+			cin >> ans;
+			cout << endl;
 			switch (ans)
 			{
-				
+
 			case '1':
 				cout << "Input name: ";
 				cin >> tmpName;
@@ -65,7 +65,7 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					cout << "Hello, " << tmpUsername << ", welcome back" << endl<<endl<<"You have "<<user[findSessionNum(user, tmpUsername)].getNotification() <<" notifications" << endl;
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl << "You have " << user[getIndexUser(tmpUsername, user)].getNotification() << " notifications" << endl;
 					logedIn = true;
 					currentUser = tmpUsername;
 					break;
@@ -81,97 +81,97 @@ int main() {
 			}
 		}
 
-		if(logedIn){
+		if (logedIn) {
 			sessionNum = findSessionNum(user, currentUser);
 			showOptionsLogedIn();
 			cout << "Select action: ";
 			cin >> ans;
 			cout << endl;
-			switch (ans){
-				case '1':
-					cout << "Input reciever's username: ";
-					cin >> tmpUsername;
-					cout << endl;
+			switch (ans) {
+			case '1':
+				cout << "Input reciever's username: ";
+				cin >> tmpUsername;
+				cout << endl;
 
-					reciever = findUser(tmpUsername, user);
-					
-					if (reciever == "Not found") {
-						cout << "User not found" << endl << endl;
-						reciever = "";
+				reciever = findUser(tmpUsername, user);
+
+				if (reciever == "Not found") {
+					cout << "User not found" << endl << endl;
+					reciever = "";
+					break;
+				}
+				recieverNum = findSessionNum(user, reciever);
+
+				cout << "To exit input 0" << endl;
+				while (message != "0") {
+					cout << getTime() << " | " << "You: ";
+					getline(cin, message);
+					if (message == "0") {
+						message = "";
 						break;
 					}
-					recieverNum = findSessionNum(user, reciever);
-
-					cout << "To exit input 0" << endl;
-					while (message != "0") {
-						cout << getTime() << " | " << "You: ";
+					if (message == "")
 						getline(cin, message);
-						if (message == "0") {
-							message = "";
-							break;
-						}
-						if (message == "")
-							getline(cin, message);
-						user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-						user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-						user[recieverNum].addNotifications();
-					}
-					cout << endl;
-					break;
+					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
+					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
+					user[recieverNum].addNotifications();
+				}
+				cout << endl;
+				break;
 
-				case '2':
-					cout << "To exit input 0" << endl;
-					while (message != "0") {
-						cout << getTime() << " | " << "You: ";
-						getline(cin, message);
-						if (message == "0") {
-							message = "";
-							break;
-						}
-						if (message == "")
-							getline(cin, message);
-						for (unsigned int i = 0; i < user.size(); i++) {
-							user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
-							user[i].addNotifications();
-						}
-					}
-					cout << endl;
-					break;				
-
-
-				case '3':
-					cout << "Input username: ";
-					cin >> tmpUsername;
-					cout << endl;
-
-					sender = findUser(tmpUsername, user);
-					if (reciever == "Not found") {
-						cout << "User not found" << endl << endl;
-						reciever = "";
+			case '2':
+				cout << "To exit input 0" << endl;
+				while (message != "0") {
+					cout << getTime() << " | " << "You: ";
+					getline(cin, message);
+					if (message == "0") {
+						message = "";
 						break;
 					}
-					user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
-					user[sessionNum].setNotifications(0);
-					
-					break;
+					if (message == "")
+						getline(cin, message);
+					for (unsigned int i = 0; i < user.size(); i++) {
+						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
+						user[i].addNotifications();
+					}
+				}
+				cout << endl;
+				break;
 
-				case '4':
-					user[sessionNum].showMessage();
-					user[sessionNum].setNotifications(0);
-					break;
 
-				case '5':
-					cout << "Signed out" << endl << endl;
-					logedIn = false;
-					break;
+			case '3':
+				cout << "Input username: ";
+				cin >> tmpUsername;
+				cout << endl;
 
-				case '0':
-					ans = 0;
+				sender = findUser(tmpUsername, user);
+				if (reciever == "Not found") {
+					cout << "User not found" << endl << endl;
+					reciever = "";
 					break;
+				}
+				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
+				user[sessionNum].setNotifications(0);
 
-				default:
-					cout << "Select action from the list" << endl << endl;
-					break;
+				break;
+
+			case '4':
+				user[sessionNum].showMessage();
+				user[sessionNum].setNotifications(0);
+				break;
+
+			case '5':
+				cout << "Signed out" << endl << endl;
+				logedIn = false;
+				break;
+
+			case '0':
+				ans = 0;
+				break;
+
+			default:
+				cout << "Select action from the list" << endl << endl;
+				break;
 			}
 		}
 
