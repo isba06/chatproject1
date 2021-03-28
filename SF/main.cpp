@@ -19,9 +19,9 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message;
+	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser;
 	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0;
+	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages;
 	bool logedIn = false;
 	vector<User> user(size);
 
@@ -67,6 +67,7 @@ int main() {
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
 					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
 					logedIn = true;
+					currentUser = tmpUsername;
 					break;
 				}
 				break;
@@ -81,8 +82,8 @@ int main() {
 		}
 
 		if(logedIn){
+			sessionNum = findSessionNum(user, currentUser);
 			showOptionsLogedIn();
-			sessionNum = findSessionNum(user, tmpUsername);
 			cout << "Select action: ";
 			cin >> ans;
 			cout << endl;
@@ -93,11 +94,13 @@ int main() {
 					cout << endl;
 
 					reciever = findUser(tmpUsername, user);
+					
 					if (reciever == "Not found") {
 						cout << "User not found" << endl << endl;
 						reciever = "";
 						break;
 					}
+					recieverNum = findSessionNum(user, reciever);
 
 					cout << "To exit input 0" << endl;
 					while (message != "0") {
@@ -109,8 +112,8 @@ int main() {
 						}
 						if (message == "")
 							getline(cin, message);
-						user[sessionNum].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage, true);
-						user[findSessionNum(user, reciever)].sendMessage(user[sessionNum].getUsername(), reciever, message, ++countMessage, true);
+						user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
+						user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					}
 					cout << endl;
 					break;
@@ -145,7 +148,7 @@ int main() {
 						reciever = "";
 						break;
 					}
-					user[sessionNum].showPrivateMessage(sender);
+					user[sessionNum].showPrivateMessage(user[sessionNum]);
 					break;
 
 				case '4':

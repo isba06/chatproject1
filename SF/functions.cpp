@@ -27,7 +27,7 @@ void showOptionsLogedIn() {
 		<< "2. Send message to everyone" << endl
 		<< "3. Show history with certan user" << endl 
 		<< "4. Show history with all users" << endl
-		<< "5. Log Out" << endl//закончить
+		<< "5. Log Out" << endl
 		<< "0. Exit" << endl;
 }
 
