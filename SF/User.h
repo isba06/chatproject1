@@ -7,21 +7,30 @@ using namespace std;
 class User
 {
 private:
-	//std::string _id;
 	std::string _name;
 	std::string _username;
 	std::string _password;
-	vector<Message> _message;
-	//int _countMessage;
+	vector<Message> _message; //вектор хранящий объект класса месседж, в котором время, сообщение, от кого и кому
 public:
-	void registr(std::string name, std::string username, std::string password);
+	void registr(std::string name, std::string username, std::string password); //функция регистрации пользователя
 	User() = default;
 	~User() = default;
-	void inMessage(std::string);
-	void OutMessage(std::string);
-	bool cmp(std::string username, std::string password);
-	std::string getName();
-	std::string getUsername();
-	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage);
-	void showMessage();
+	
+
+	std::string getName()
+	{
+		return _name;
+	}
+
+	std::string getUsername()
+	{
+		return _username;
+	}
+
+	std::string getPassword()
+	{
+		return _password;
+	}
+	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage); //отправка сообщения
+	void showMessage(); // показать сообщение
 };

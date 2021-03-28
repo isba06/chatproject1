@@ -3,26 +3,6 @@
 #include "functions.h"
 
 
-bool User::cmp(std::string username, std::string password)
-{
-	if ((_username == username) && (password == _password))
-		return true;
-	else return false;
-
-}
-
-
-std::string User::getName()
-{
-	return _name;
-}
-
-
-
-std::string User::getUsername()
-{
-	return _username;
-}
 
 
 
@@ -45,7 +25,7 @@ void User::sendMessage(const string sender, const string reciever, const string 
 }
 
 void User::showMessage() {
-	for (auto a : _message) {
+	for (auto a : _message) { //что тут делается
 		if (a.getMessage() == "")
 			continue;
 		cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;

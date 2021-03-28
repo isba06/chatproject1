@@ -22,10 +22,11 @@ void showOptions() {
 }
 
 void showOptionsLogedIn() {
-	cout << "2. Log out" << endl
-		<< "3. Send message to user" << endl
-		<< "4. Send message to everyone" << endl
-		<< "5. Show history" << endl //закончить
+	 
+	cout<< "1. Send message to user" << endl
+		<< "2. Send message to everyone" << endl
+		<< "3. Show history" << endl 
+		<< "4. Log Out" << endl//закончить
 		<< "0. Exit" << endl;
 }
 
@@ -37,13 +38,17 @@ bool isBusy(const string& username, vector<User>& user) {
 	return false;
 }
 
-string logIn(const string& username, const string& password, vector<User>& user) {
+bool checkPasswordUsername(std::string username, std::string password, vector<User>& user)
+{
 	for (unsigned int i = 0; i < user.size(); i++) {
-		if (user[i].cmp(username, password))
-			return user[i].getUsername();
+		if ((user[i].getUsername() == username) && (user[i].getPassword() == password))
+			return true;
+		else
+		{
+			return false;
+			cout << "Incorrect username or password" << endl << endl;
+		}
 	}
-	cout << "Incorrect username or password" << endl << endl;
-	return "";
 }
 
 string findUser(const string& username, vector<User>& user) {
