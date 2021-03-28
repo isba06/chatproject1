@@ -32,5 +32,6 @@ public:
 		return _password;
 	}
 	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate); //отправка сообщения
-	void showMessage(); // показать сообщение
+	void showPrivateMessage(const string& sender); // показать личные сообщения
+	void showMessage(); // показать общие сообщение
 };

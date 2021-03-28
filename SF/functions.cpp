@@ -25,8 +25,9 @@ void showOptionsLogedIn() {
 	 
 	cout<< "1. Send message to user" << endl
 		<< "2. Send message to everyone" << endl
-		<< "3. Show history" << endl 
-		<< "4. Log Out" << endl//закончить
+		<< "3. Show history with certan user" << endl 
+		<< "4. Show history with all users" << endl
+		<< "5. Log Out" << endl//закончить
 		<< "0. Exit" << endl;
 }
 
@@ -38,17 +39,14 @@ bool isBusy(const string& username, vector<User>& user) {
 	return false;
 }
 
-bool checkPasswordUsername(std::string username, std::string password, vector<User>& user)
+bool checkPasswordUsername(string username, string password, vector<User>& user)
 {
 	for (unsigned int i = 0; i < user.size(); i++) {
 		if ((user[i].getUsername() == username) && (user[i].getPassword() == password))
 			return true;
-		else
-		{
-			return false;
-			cout << "Incorrect username or password" << endl << endl;
-		}
 	}
+	return false;
+	cout << "Incorrect username or password" << endl << endl;
 }
 
 string findUser(const string& username, vector<User>& user) {

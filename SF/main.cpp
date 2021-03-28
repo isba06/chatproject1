@@ -88,10 +88,6 @@ int main() {
 			cout << endl;
 			switch (ans){
 				case '1':
-					if (!logedIn) {
-						cout << "Select action from the list" << endl << endl;
-						break;
-					}
 					cout << "Input reciever's username: ";
 					cin >> tmpUsername;
 					cout << endl;
@@ -139,17 +135,28 @@ int main() {
 
 
 				case '3':
-					if (!logedIn) {
-						cout << "Select action from the list" << endl << endl;
+					cout << "Input username: ";
+					cin >> tmpUsername;
+					cout << endl;
+
+					sender = findUser(tmpUsername, user);
+					if (reciever == "Not found") {
+						cout << "User not found" << endl << endl;
+						reciever = "";
 						break;
 					}
-					user[sessionNum].showMessage();
+					user[sessionNum].showPrivateMessage(sender);
 					break;
 
 				case '4':
+					user[sessionNum].showMessage();
+					break;
+
+				case '5':
 					cout << "Signed out" << endl << endl;
 					logedIn = false;
 					break;
+
 				case '0':
 					ans = 0;
 					break;

@@ -8,7 +8,6 @@
 
 void User::registr(std::string name, std::string username, std::string password)
 {
-	//_id = id;
 	_name = name;
 	_username = username;
 	_password = password;
@@ -25,13 +24,24 @@ void User::sendMessage(const string sender, const string reciever, const string 
 	
 }
 
+void User::showPrivateMessage(const string& sender) {
+	for (auto a : _message) {
+		if (a.getMessage() == "")
+			continue;
+		if (a.getIsPrivateMessage())
+			cout << a.getTime() << " | " << sender << ": " << a.getMessage() << endl;
+		else continue;
+	}
+	cout << endl;
+}
+
 void User::showMessage() {
 	for (auto a : _message) {
 		if (a.getMessage() == "")
 			continue;
-		if(a.getIsPrivateMessage())
-		cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
-		else cout << a.getTime() << " | " << "Group: " << a.getMessage() << endl;
+		if (!a.getIsPrivateMessage())
+			cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
+		else continue;
 	}
 	cout << endl;
 }
