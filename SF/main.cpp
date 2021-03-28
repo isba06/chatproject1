@@ -65,7 +65,7 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					cout << "Hello, " << tmpUsername << ", welcome back" << endl<<endl<<"You have "<<user[getIndexUser(tmpUsername,user)].getNotification() <<" notifications" << endl;
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl<<endl<<"You have "<<user[findSessionNum(user, tmpUsername)].getNotification() <<" notifications" << endl;
 					logedIn = true;
 					currentUser = tmpUsername;
 					break;

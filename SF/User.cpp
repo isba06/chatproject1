@@ -28,11 +28,8 @@ void User::showPrivateMessage(User sender) {
 		if (a.getMessage() == "")
 			continue;
 		if (a.getIsPrivateMessage()) {
-			for (int i = 0; i < sender._message.size(); i++)
-			{
-				if (a.getAddressee() == sender._message[i].getAddressee() && a.getSender() == sender._message[i].getSender())
-					cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
-			}
+				cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
+
 		}
 		else continue;
 	}
