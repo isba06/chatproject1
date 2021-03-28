@@ -19,7 +19,7 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, userSession;
+	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message;
 	char ans;
 	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0;
 	bool logedIn = false;
@@ -28,7 +28,6 @@ int main() {
 
 	do {
 
-		
 
 		if (!logedIn) {			
 		
