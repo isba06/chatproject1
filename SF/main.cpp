@@ -150,7 +150,7 @@ int main() {
 						reciever = "";
 						break;
 					}
-					user[sessionNum].showPrivateMessage(user[sessionNum]);
+					user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
 					user[sessionNum].setNotifications(0);
 					
 					break;
