@@ -27,20 +27,19 @@ int main() {
 
 
 	do {
-		if (logedIn) {
-			showOptionsLogedIn();
-			sessionNum = findSessionNum(user, userSession);
-		}
-		else {
-			showOptions();
-			sessionNum = -1;
-		}
+
+		
+
+		if (!logedIn) {			
+		
+		showOptions();
+		sessionNum = -1;
 		cout << "Select action: ";
 		cin >> ans;
 		cout << endl;
-		if (!logedIn) {
 			switch (ans)
 			{
+				
 			case '1':
 				cout << "Input name: ";
 				cin >> tmpName;
@@ -86,6 +85,11 @@ int main() {
 		}
 
 		if(logedIn){
+			showOptionsLogedIn();
+			sessionNum = findSessionNum(user, tmpUsername);
+			cout << "Select action: ";
+			cin >> ans;
+			cout << endl;
 			switch (ans){
 				case '1':
 					if (!logedIn) {
@@ -120,13 +124,6 @@ int main() {
 					break;
 
 				case '2':
-					if (!logedIn) {
-						cout << "Select action from the list" << endl << endl;
-						break;
-					}
-					break;
-
-				case '3':
 					cout << "To exit input 0" << endl;
 					while (message != "0") {
 						cout << getTime() << " | " << "You: ";
@@ -142,7 +139,17 @@ int main() {
 						}
 					}
 					cout << endl;
+					break;				
+
+
+				case '3':
+					if (!logedIn) {
+						cout << "Select action from the list" << endl << endl;
+						break;
+					}
+					user[sessionNum].showMessage();
 					break;
+
 				case '4':
 					cout << "Signed out" << endl << endl;
 					logedIn = false;
