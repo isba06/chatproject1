@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "Message.h"
+#include <vector>
 using namespace std;
 
 class User
@@ -31,7 +32,12 @@ public:
 	{
 		return _password;
 	}
+
+	int getMessagesNum() {
+		return _message.size();
+	}
+
 	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate); //отправка сообщения
-	void showPrivateMessage(const string& sender); // показать личные сообщения
+	void showPrivateMessage(User sender); // показать личные сообщения
 	void showMessage(); // показать общие сообщение
 };
