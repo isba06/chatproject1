@@ -70,6 +70,7 @@ int main() {
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
 					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
 					logedIn = true;
+					
 				}
 				else {
 					break;
