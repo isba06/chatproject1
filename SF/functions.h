@@ -13,23 +13,16 @@
 #include <iomanip>
 #include "User.h"
 
-//Отображение возможных действий в меню
-void showOptions(); 
+void showOptions();
 
-//Отображение возможных действий в меню, если пользователь авторизован
-void showOptionsLogedIn(); 
+void showOptionsLogedIn();
 
-//Проверка имени пользователя на доступность
-bool isBusy(const string& username, vector<User>& user); 
+bool isBusy(const string& username, vector<User>& user);
 
-//Ищет пользователя по логину и паролю и авторизует его
-string logIn(const string& username, const string& password, vector<User>& user); 
+bool checkPasswordUsername(std::string username, std::string password, vector<User>& user); //проверка корректности пароля и логина
 
-//Проверяет наличие указаного пользователя
 string findUser(const string& username, vector<User>& user);
 
-//возвращает номер ячейки массива указанного пользователя
 int findSessionNum(vector<User>& user, const string& userSession);
 
-//возвращает текущее время
 string getTime();
