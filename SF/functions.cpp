@@ -49,6 +49,16 @@ bool checkPasswordUsername(string username, string password, vector<User>& user)
 	cout << "Incorrect username or password" << endl << endl;
 }
 
+int getIndexUser(string username, vector<User>& user)
+{
+	for (unsigned int i = 0; i < user.size(); i++) {
+		if ((user[i].getUsername() == username))
+			return i;
+	}
+	return -1;
+}
+
+
 string findUser(const string& username, vector<User>& user) {
 	string reciever;
 	for (unsigned int i = 0; i < user.size(); i++) {

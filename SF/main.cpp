@@ -65,7 +65,7 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl<<endl<<"You have "<<user[getIndexUser(tmpUsername,user)].getNotification() <<" notifications" << endl;
 					logedIn = true;
 					currentUser = tmpUsername;
 					break;
@@ -107,13 +107,14 @@ int main() {
 						cout << getTime() << " | " << "You: ";
 						getline(cin, message);
 						if (message == "0") {
-							message = "";		//зачем
+							message = "";
 							break;
 						}
 						if (message == "")
 							getline(cin, message);
 						user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 						user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
+						user[recieverNum].addNotifications();
 					}
 					cout << endl;
 					break;
@@ -131,6 +132,7 @@ int main() {
 							getline(cin, message);
 						for (unsigned int i = 0; i < user.size(); i++) {
 							user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
+							user[i].addNotifications();
 						}
 					}
 					cout << endl;
@@ -149,10 +151,13 @@ int main() {
 						break;
 					}
 					user[sessionNum].showPrivateMessage(user[sessionNum]);
+					user[sessionNum].setNotifications(0);
+					
 					break;
 
 				case '4':
 					user[sessionNum].showMessage();
+					user[sessionNum].setNotifications(0);
 					break;
 
 				case '5':
