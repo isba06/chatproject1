@@ -127,11 +127,21 @@ int main() {
 					break;
 
 				case '3':
-					if (!logedIn) {
-						cout << "Select action from the list" << endl << endl;
-						break;
+					cout << "To exit input 0" << endl;
+					while (message != "0") {
+						cout << getTime() << " | " << "You: ";
+						getline(cin, message);
+						if (message == "0") {
+							message = "";
+							break;
+						}
+						if (message == "")
+							getline(cin, message);
+						for (unsigned int i = 0; i < user.size(); i++) {
+							user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage);
+						}
 					}
-					user[sessionNum].showMessage();
+					cout << endl;
 					break;
 				case '4':
 					cout << "Signed out" << endl << endl;
