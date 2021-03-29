@@ -21,7 +21,7 @@ int main() {
 
 	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser, notif;
 	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages, countNotification = 0;
+	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages, countPrivateNotification = 0, countNotification = 0, notifNum;
 	bool logedIn = false;
 	vector<User> user(size);
 
@@ -65,18 +65,22 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
-					cout << "You have " << user[getIndexUser(tmpUsername, user)].getNotification() << " new messages ";
-					if (user[getIndexUser(tmpUsername, user)].getNotification()) {
+					logedIn = true;
+					currentUser = tmpUsername;
+					notifNum = user[getIndexUser(currentUser, user)].getPrivateNotification() + user[getIndexUser(currentUser, user)].getNotification();
+					cout << "Hello, " << user[findSessionNum(user, currentUser)].getName() << ", welcome back" << endl << endl;
+					cout << "You have " << notifNum << " new messages ";
+					if (notifNum) {
 						cout << "from:" << endl;
-						for (int i = 0; i < user[getIndexUser(tmpUsername, user)].SizeVectorNotificationUsername(); i++) {
-							cout << "-" << user[getIndexUser(tmpUsername, user)].getUsernameNotification(i) << endl;
+						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorPrivateNotificationUsername(); i++) {
+							cout << "-" << user[getIndexUser(currentUser, user)].getPrivateUsernameNotification(i) << endl;
+						}
+						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
+							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
 						
 					}
 					else { cout << endl; }
-					logedIn = true;
-					currentUser = tmpUsername;
 				} else {
 					cout << "Incorrect username or password" << endl;
 				}
@@ -126,12 +130,13 @@ int main() {
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					
-					user[recieverNum].ResizeVectorNotificationUsername(countNotification+1);
-					user[recieverNum].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
+					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification +1);
+					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
 				}
-				user[recieverNum].addNotifications();
-				++countNotification;
+				user[recieverNum].addPrivateNotifications();
+				++countPrivateNotification;
 				cout << endl;
+				message = "";
 				break;
 
 			case '2':
@@ -147,9 +152,12 @@ int main() {
 						getline(cin, message);
 					for (unsigned int i = 0; i < user.size(); i++) {
 						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
-						user[i].addNotifications();
-						user[i].ResizeVectorNotificationUsername(countNotification + 1);
-						user[i].setUsernameNotification("Group:: "+user[sessionNum].getUsername(), countNotification);
+						if (i != sessionNum) {
+							user[i].addNotifications();
+							user[i].ResizeVectorNotificationUsername(countNotification + 1);
+							user[i].setUsernameNotification("Group:: " + user[sessionNum].getUsername(), countNotification);
+						}
+						else { continue; }
 
 					}
 				}
@@ -163,15 +171,14 @@ int main() {
 				cout << endl;
 
 				sender = findUser(tmpUsername, user);
-				if (reciever == "Not found") {
+				if (sender == "Not found") {
 					cout << "User not found" << endl << endl;
-					reciever = "";
+					sender = "";
 					break;
 				}
 				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
-				user[sessionNum].setNotifications(0);
-				user[sessionNum].ResizeVectorNotificationUsername(0);
-
+				user[sessionNum].setPrivateNotifications(countPrivateNotification - 1);
+				user[sessionNum].deleteUsername(sender);
 				break;
 
 			case '4':

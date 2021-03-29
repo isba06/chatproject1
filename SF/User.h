@@ -13,7 +13,9 @@ private:
 	std::string _password;
 	vector<Message> _message; //вектор хранящий объект класса месседж, в котором время, сообщение, от кого и кому
 	int _notification=0;
+	int _privateNotification = 0;
 	vector <string> _notificationUsername;
+	vector <string> _privateNotificationUsername;
 public:
 	void registr(std::string name, std::string username, std::string password); //функция регистрации пользователя
 	User() = default;
@@ -41,7 +43,7 @@ public:
 	}
 
 	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate); //отправка сообщения
-	void showPrivateMessage(User sender); // показать личные сообщения
+	void showPrivateMessage(User& sender); // показать личные сообщения
 	void showMessage(); // показать общие сообщение
 
 	int getNotification()
@@ -49,9 +51,19 @@ public:
 		return _notification;
 	}
 
+	int getPrivateNotification()
+	{
+		return _privateNotification;
+	}
+
 	void addNotifications()
 	{
 		++_notification;
+	}
+
+	void addPrivateNotifications()
+	{
+		++_privateNotification;
 	}
 
 	void setNotifications(int notif)
@@ -59,9 +71,19 @@ public:
 		_notification = notif;
 	}
 
+	void setPrivateNotifications(int notif)
+	{
+		_privateNotification = notif;
+	}
+
 	size_t SizeVectorNotificationUsername()
 	{
 		return _notificationUsername.size();
+	}
+
+	size_t SizeVectorPrivateNotificationUsername()
+	{
+		return _privateNotificationUsername.size();
 	}
 
 	void ResizeVectorNotificationUsername(int countVector)
@@ -69,14 +91,41 @@ public:
 		_notificationUsername.resize(countVector);
 	}
 
+	void ResizeVectorPrivateNotificationUsername(int countVector)
+	{
+		_privateNotificationUsername.resize(countVector);
+	}
+
 	void setUsernameNotification(string username, int index)
 	{
 		_notificationUsername[index]= username;
 	}
 
+	void setPrivateUsernameNotification(string username, int index)
+	{
+		_privateNotificationUsername[index] = username;
+	}
+
 	string getUsernameNotification(int index)
 	{
 		return _notificationUsername[index];
+	}
+
+	string getPrivateUsernameNotification(int index)
+	{
+		return _privateNotificationUsername[index];
+	}
+
+	void deleteUsername(string username) {
+		int pos;
+		string tmp;
+		for (int i = 0; i < _privateNotificationUsername.size(); i++) {
+			if (_privateNotificationUsername[i] == username) {
+				_privateNotificationUsername[i] = _privateNotificationUsername[_privateNotificationUsername.size() - 1];
+				_privateNotificationUsername.pop_back();
+			}
+		}
+
 	}
 	/*
 	void AddValueNotification()

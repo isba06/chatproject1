@@ -23,7 +23,7 @@ void User::sendMessage(const string sender, const string reciever, const string 
 	_message[countMessage - 1].setIsPrivateMessage(isPrivate);
 }
 
-void User::showPrivateMessage(User sender) {
+void User::showPrivateMessage(User& sender) {
 	for (auto a : _message) {
 		if (a.getMessage() == "")
 			continue;
