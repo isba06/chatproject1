@@ -125,9 +125,10 @@ int main() {
 						getline(cin, message);
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					
-					user[recieverNum].ResizeVectorNotificationUsername(countNotification+1);
-					user[recieverNum].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
+					if (!user[recieverNum].checkConsidenceUsernameNotification(user[sessionNum].getUsername())) {
+						user[recieverNum].ResizeVectorNotificationUsername(countNotification + 1);
+						user[recieverNum].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
+					}
 				}
 				user[recieverNum].addNotifications();
 				++countNotification;
@@ -147,11 +148,14 @@ int main() {
 						getline(cin, message);
 					for (unsigned int i = 0; i < user.size(); i++) {
 						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
-						user[i].addNotifications();
-						user[i].ResizeVectorNotificationUsername(countNotification + 1);
-						user[i].setUsernameNotification("Group:: "+user[sessionNum].getUsername(), countNotification);
+						if (!user[recieverNum].checkConsidenceUsernameNotification(user[sessionNum].getUsername())) {
+							user[i].addNotifications();
+							user[i].ResizeVectorNotificationUsername(countNotification + 1);
+							user[i].setUsernameNotification("Group:: " + user[sessionNum].getUsername(), countNotification);
+						}
 
 					}
+					
 				}
 				cout << endl;
 				break;

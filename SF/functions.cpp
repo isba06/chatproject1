@@ -16,19 +16,19 @@
 using namespace std;
 
 void showOptions() {
-	cout<<endl << "1. Sign in" << endl
+	cout<< "1. Sign in" << endl
 		<< "2. Log in" << endl
-		<< "0. Exit" << endl;
+		<< "0. Exit" << endl<<endl;
 }
 
 void showOptionsLogedIn() {
 
-	cout<<endl << "1. Send message to user" << endl
+	cout<< "1. Send message to user" << endl
 		<< "2. Send message to everyone" << endl
 		<< "3. Show history with certan user" << endl
 		<< "4. Show history with all users" << endl
 		<< "5. Log Out" << endl
-		<< "0. Exit" << endl;
+		<< "0. Exit" << endl<<endl;
 }
 
 bool isBusy(const string& username, vector<User>& user) {

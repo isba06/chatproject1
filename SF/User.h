@@ -71,7 +71,15 @@ public:
 
 	void setUsernameNotification(string username, int index)
 	{
-		_notificationUsername[index]= username;
+				_notificationUsername[index] = username;
+	}
+
+	bool checkConsidenceUsernameNotification(string username)
+	{
+		for (auto a : _notificationUsername)
+			if (a == username)
+				return true;
+		return false;
 	}
 
 	string getUsernameNotification(int index)
