@@ -122,11 +122,11 @@ int main() {
 				}
 				recieverNum = findSessionNum(user, reciever);
 
-				cout << "To exit input 0" << endl;
-				while (message != "0") {
+				cout << "To exit enter '-e'" << endl;
+				while (message != "-e") {
 					cout << getTime() << " | " << "You: ";
 					getline(cin, message);
-					if (message == "0") {
+					if (message == "-e") {
 						message = "";
 						break;
 					}
@@ -147,11 +147,11 @@ int main() {
 
 				//отправка сообщений всем участникам
 			case '2':
-				cout << "To exit input 0" << endl;
-				while (message != "0") {
+				cout << "To exit enter '-e'" << endl;
+				while (message != "-e") {
 					cout << getTime() << " | " << "You: ";
 					getline(cin, message);
-					if (message == "0") {
+					if (message == "-e") {
 						message = "";
 						break;
 					}
