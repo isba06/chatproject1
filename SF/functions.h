@@ -28,5 +28,3 @@ int getIndexUser(string, vector<User>& user);
 int findSessionNum(vector<User>& user, const string& userSession);
 
 string getTime();
-
-void showUnreadMessages(const vector<User> user, const int reciever);

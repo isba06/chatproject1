@@ -21,7 +21,7 @@ int main() {
 
 	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser, notif;
 	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages, countPrivateNotification = 0, countNotification = 0, notifNum;
+	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, countPrivateNotification = 0, countNotification = 0, notifNum;
 	bool logedIn = false;
 	vector<User> user(size);
 
@@ -78,13 +78,13 @@ int main() {
 						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
-						
+
 					}
 					else { cout << endl; }
-				} else {
+				}
+				else {
 					cout << "Incorrect username or password" << endl;
 				}
-					break;
 				break;
 			case '0':
 				ans = 0;
@@ -129,8 +129,8 @@ int main() {
 						getline(cin, message);
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					
-					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification +1);
+
+					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification + 1);
 					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
 				}
 				user[recieverNum].addPrivateNotifications();
@@ -177,7 +177,7 @@ int main() {
 					break;
 				}
 				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
-				user[sessionNum].setPrivateNotifications(countPrivateNotification - 1);
+				user[sessionNum].setPrivateNotifications(--countPrivateNotification);
 				user[sessionNum].deleteUsername(sender);
 				break;
 

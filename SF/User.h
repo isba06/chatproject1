@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <vector>
 #include "Message.h"
@@ -11,17 +11,17 @@ private:
 	std::string _name;
 	std::string _username;
 	std::string _password;
-	vector<Message> _message; //вектор хранящий объект класса месседж, в котором время, сообщение, от кого и кому
-	int _notification=0;
+	vector<Message> _message;
+	int _notification = 0;
 	int _privateNotification = 0;
 	vector <string> _notificationUsername;
 	vector <string> _privateNotificationUsername;
 public:
-	void registr(std::string name, std::string username, std::string password); //функция регистрации пользователя
+	void registr(std::string name, std::string username, std::string password);
 	User() = default;
 	~User() = default;
-	
-	
+
+
 
 	std::string getName()
 	{
@@ -42,9 +42,9 @@ public:
 		return _message.size();
 	}
 
-	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate); //отправка сообщения
-	void showPrivateMessage(User& sender); // показать личные сообщения
-	void showMessage(); // показать общие сообщение
+	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate);
+	void showPrivateMessage(User& sender);
+	void showMessage();
 
 	int getNotification()
 	{
@@ -98,7 +98,7 @@ public:
 
 	void setUsernameNotification(string username, int index)
 	{
-		_notificationUsername[index]= username;
+		_notificationUsername[index] = username;
 	}
 
 	void setPrivateUsernameNotification(string username, int index)
@@ -117,7 +117,6 @@ public:
 	}
 
 	void deleteUsername(string username) {
-		int pos;
 		string tmp;
 		for (int i = 0; i < _privateNotificationUsername.size(); i++) {
 			if (_privateNotificationUsername[i] == username) {
@@ -127,20 +126,4 @@ public:
 		}
 
 	}
-	/*
-	void AddValueNotification()
-	{
-		_value++;
-	}
-
-	int getValueNotification()
-	{
-		return _value;
-	}
-
-	void setValueNotification(int value)
-	{
-		_value = value;
-	}
-	*/
 };
