@@ -19,9 +19,9 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser;
+	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser, notif;
 	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages;
+	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, unreadMessages, countNotification = 0;
 	bool logedIn = false;
 	vector<User> user(size);
 
@@ -65,11 +65,22 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl << "You have " << user[getIndexUser(tmpUsername, user)].getNotification() << " notifications" << endl;
+					cout << "Hello, " << tmpUsername << ", welcome back" << endl << endl;
+					cout << "You have " << user[getIndexUser(tmpUsername, user)].getNotification() << " new messages ";
+					if (user[getIndexUser(tmpUsername, user)].getNotification()) {
+						cout << "from:" << endl;
+						for (int i = 0; i < user[getIndexUser(tmpUsername, user)].SizeVectorNotificationUsername(); i++) {
+							cout << "-" << user[getIndexUser(tmpUsername, user)].getUsernameNotification(i) << endl;
+						}
+						
+					}
+					else { cout << endl; }
 					logedIn = true;
 					currentUser = tmpUsername;
-					break;
+				} else {
+					cout << "Incorrect username or password" << endl;
 				}
+					break;
 				break;
 			case '0':
 				ans = 0;
@@ -115,7 +126,10 @@ int main() {
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].addNotifications();
+					user[recieverNum].ResizeVectorNotificationUsername(countNotification+1);
+					user[recieverNum].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
 				}
+				++countNotification;
 				cout << endl;
 				break;
 
@@ -133,6 +147,9 @@ int main() {
 					for (unsigned int i = 0; i < user.size(); i++) {
 						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
 						user[i].addNotifications();
+						user[i].ResizeVectorNotificationUsername(countNotification + 1);
+						user[i].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
+
 					}
 				}
 				cout << endl;

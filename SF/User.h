@@ -13,6 +13,7 @@ private:
 	std::string _password;
 	vector<Message> _message; //вектор хранящий объект класса месседж, в котором время, сообщение, от кого и кому
 	int _notification=0;
+	vector <string> _notificationUsername;
 public:
 	void registr(std::string name, std::string username, std::string password); //функция регистрации пользователя
 	User() = default;
@@ -35,7 +36,7 @@ public:
 		return _password;
 	}
 
-	int getMessagesNum() {
+	size_t getMessagesNum() {
 		return _message.size();
 	}
 
@@ -57,4 +58,40 @@ public:
 	{
 		_notification = notif;
 	}
+
+	size_t SizeVectorNotificationUsername()
+	{
+		return _notificationUsername.size();
+	}
+
+	void ResizeVectorNotificationUsername(int countVector)
+	{
+		_notificationUsername.resize(countVector);
+	}
+
+	void setUsernameNotification(string username, int index)
+	{
+		_notificationUsername[index]= username;
+	}
+
+	string getUsernameNotification(int index)
+	{
+		return _notificationUsername[index];
+	}
+	/*
+	void AddValueNotification()
+	{
+		_value++;
+	}
+
+	int getValueNotification()
+	{
+		return _value;
+	}
+
+	void setValueNotification(int value)
+	{
+		_value = value;
+	}
+	*/
 };

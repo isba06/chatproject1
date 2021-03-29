@@ -44,7 +44,7 @@ void User::showMessage() {
 		if (a.getMessage() == "")
 			continue;
 		if (!a.getIsPrivateMessage())
-			cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
+			cout << a.getTime() << " | "<<"Group:: " << a.getSender() << ": " << a.getMessage() << endl;
 		else continue;
 	}
 	cout << endl;
