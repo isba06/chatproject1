@@ -27,7 +27,7 @@ int main() {
 	string pass;
 
 	do {
-
+		//меню и действия до авторизцаии
 		if (!logedIn) {
 
 			showOptions();
@@ -65,16 +65,18 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					logedIn = true;
+					logedIn = true;//идентификатор авторизации
 					currentUser = tmpUsername;
 					notifNum = user[getIndexUser(currentUser, user)].getPrivateNotification() + user[getIndexUser(currentUser, user)].getNotification();
 					cout << "Hello, " << user[findSessionNum(user, currentUser)].getName() << ", welcome back" << endl << endl;
-					cout << "You have " << notifNum << " new messages ";
+					cout << "You have " << notifNum << " new messages "<<endl;
 					if (notifNum) {
 						cout << "from:" << endl;
+						//уведомления личных сообщений
 						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorPrivateNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getPrivateUsernameNotification(i) << endl;
 						}
+						//уведомления групповых
 						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
@@ -96,6 +98,7 @@ int main() {
 			}
 		}
 
+		//после авторизации
 		if (logedIn) {
 			sessionNum = findSessionNum(user, currentUser);
 			showOptionsLogedIn();
@@ -103,6 +106,8 @@ int main() {
 			cin >> ans;
 			cout << endl;
 			switch (ans) {
+
+				//регистрация
 			case '1':
 				cout << "Input reciever's username: ";
 				cin >> tmpUsername;
@@ -127,6 +132,7 @@ int main() {
 					}
 					if (message == "")
 						getline(cin, message);
+					//запись в поле(вектор класса messege) и отправителю и получателю
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, countMessage, true);
 
@@ -139,6 +145,7 @@ int main() {
 				message = "";
 				break;
 
+				//отправка сообщений всем участникам
 			case '2':
 				cout << "To exit input 0" << endl;
 				while (message != "0") {
@@ -164,7 +171,7 @@ int main() {
 				cout << endl;
 				break;
 
-
+				//вывод личных сообщений от конкретного пользователя
 			case '3':
 				cout << "Input username: ";
 				cin >> tmpUsername;
@@ -181,6 +188,7 @@ int main() {
 				user[sessionNum].deleteUsername(sender);
 				break;
 
+				//вывод групповых сообщений
 			case '4':
 				user[sessionNum].showMessage();
 				user[sessionNum].setNotifications(0);
