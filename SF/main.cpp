@@ -27,7 +27,7 @@ int main() {
 
 
 	do {
-
+		//до авторизации
 		if (!logedIn) {
 
 			showOptions();
@@ -37,7 +37,7 @@ int main() {
 			cout << endl;
 			switch (ans)
 			{
-
+			//регистрация
 			case '1':
 				cout << "Input name: ";
 				cin >> tmpName;
@@ -57,6 +57,7 @@ int main() {
 				user[count++].registr(tmpName, tmpUsername, tmpPassword);
 				break;
 
+				//авторизация
 			case '2':
 				cout << "Input username: ";
 				cin >> tmpUsername;
@@ -65,17 +66,21 @@ int main() {
 				cout << endl;
 
 				if (checkPasswordUsername(tmpUsername, tmpPassword, user)) {
-					logedIn = true;
+					logedIn = true; //идентификатор авторизованного пользователя
 					currentUser = tmpUsername;
 					notifNum = user[getIndexUser(currentUser, user)].getPrivateNotification() + user[getIndexUser(currentUser, user)].getNotification();
 					cout << "Hello, " << user[findSessionNum(user, currentUser)].getName() << ", welcome back" << endl << endl;
 					cout << "You have " << notifNum << " new messages ";
 					if (notifNum) {
 						cout << "from:" << endl;
+
+						//уведомление от кого пришли личные сообщения
 						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorPrivateNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getPrivateUsernameNotification(i) << endl;
 						}
-						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
+
+						//уведомление о групповых сообщениях
+						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorGroupNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
 
@@ -95,7 +100,7 @@ int main() {
 				break;
 			}
 		}
-
+		//после авторизации
 		if (logedIn) {
 			sessionNum = findSessionNum(user, currentUser);
 			showOptionsLogedIn();
@@ -127,9 +132,8 @@ int main() {
 					}
 					if (message == "")
 						getline(cin, message);
-					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-
+					user[sessionNum].sendMessage(reciever, message, ++countMessage, true);
+					user[recieverNum].sendMessage(reciever, message, ++countMessage, true);
 					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification + 1);
 					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
 				}
@@ -151,7 +155,7 @@ int main() {
 					if (message == "")
 						getline(cin, message);
 					for (unsigned int i = 0; i < user.size(); i++) {
-						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
+						user[i].sendMessage(user[i].getUsername(), message, ++countMessage, false);
 						if (i != sessionNum) {
 							user[i].addNotifications();
 							user[i].ResizeVectorNotificationUsername(countNotification + 1);
@@ -176,7 +180,7 @@ int main() {
 					sender = "";
 					break;
 				}
-				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
+				user[sessionNum].showPrivateMessage();
 				user[sessionNum].setPrivateNotifications(--countPrivateNotification);
 				user[sessionNum].deleteUsername(sender);
 				break;

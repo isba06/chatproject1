@@ -13,26 +13,22 @@ void User::registr(std::string name, std::string username, std::string password)
 	_password = password;
 }
 
-void User::sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate)
+void User::sendMessage(const string reciever, const string message, unsigned int countMessage, bool isPrivate)
 {
 	_message.resize(countMessage);
-	_message[countMessage - 1].setSender(sender);
-	_message[countMessage - 1].setAddressee(reciever);
-	_message[countMessage - 1].setMessage(message);
-	_message[countMessage - 1].setTime(getTime());
-	_message[countMessage - 1].setIsPrivateMessage(isPrivate);
+	_message[countMessage-1].setSender(_username);
+	_message[countMessage-1].setAddressee(reciever);
+	_message[countMessage-1].setMessage(message);
+	_message[countMessage-1].setTime(getTime());
+	_message[countMessage-1].setIsPrivateMessage(isPrivate);
 }
 
-void User::showPrivateMessage(User& sender) {
+void User::showPrivateMessage() {
 	for (auto a : _message) {
 		if (a.getMessage() == "")
 			continue;
 		if (a.getIsPrivateMessage()) {
-			for (int i = 0; i < sender._message.size(); i++)
-			{
-				if (a.getAddressee() == sender._message[i].getAddressee() && a.getSender() == sender._message[i].getSender())
-					cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
-			}
+			cout << a.getTime() << " | " << a.getSender() << ": " << a.getMessage() << endl;
 		}
 		else continue;
 	}

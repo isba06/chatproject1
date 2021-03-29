@@ -42,8 +42,8 @@ public:
 		return _message.size();
 	}
 
-	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate);
-	void showPrivateMessage(User& sender);
+	void sendMessage(const string reciever, const string message, unsigned int countMessage, bool isPrivate);
+	void showPrivateMessage();
 	void showMessage();
 
 	int getNotification()
@@ -76,7 +76,7 @@ public:
 		_privateNotification = notif;
 	}
 
-	size_t SizeVectorNotificationUsername()
+	size_t SizeVectorGroupNotificationUsername()
 	{
 		return _notificationUsername.size();
 	}
