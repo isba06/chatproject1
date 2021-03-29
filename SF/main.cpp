@@ -125,10 +125,11 @@ int main() {
 						getline(cin, message);
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					user[recieverNum].addNotifications();
+					
 					user[recieverNum].ResizeVectorNotificationUsername(countNotification+1);
 					user[recieverNum].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
 				}
+				user[recieverNum].addNotifications();
 				++countNotification;
 				cout << endl;
 				break;
@@ -148,7 +149,7 @@ int main() {
 						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
 						user[i].addNotifications();
 						user[i].ResizeVectorNotificationUsername(countNotification + 1);
-						user[i].setUsernameNotification(user[sessionNum].getUsername(), countNotification);
+						user[i].setUsernameNotification("Group:: "+user[sessionNum].getUsername(), countNotification);
 
 					}
 				}
@@ -169,12 +170,14 @@ int main() {
 				}
 				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
 				user[sessionNum].setNotifications(0);
+				user[sessionNum].ResizeVectorNotificationUsername(0);
 
 				break;
 
 			case '4':
 				user[sessionNum].showMessage();
 				user[sessionNum].setNotifications(0);
+				user[sessionNum].ResizeVectorNotificationUsername(0);
 				break;
 
 			case '5':
