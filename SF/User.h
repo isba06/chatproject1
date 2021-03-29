@@ -21,7 +21,10 @@ public:
 	User() = default;
 	~User() = default;
 
-
+	void changePassword(string pass)
+	{
+		_password = pass;
+	}
 
 	std::string getName()
 	{

@@ -24,7 +24,7 @@ int main() {
 	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, countPrivateNotification = 0, countNotification = 0, notifNum;
 	bool logedIn = false;
 	vector<User> user(size);
-
+	string pass;
 
 	do {
 
@@ -191,7 +191,14 @@ int main() {
 				cout << "Signed out" << endl << endl;
 				logedIn = false;
 				break;
-
+			case '6':
+				
+				cout << "Password: ";
+				cin >> pass;
+				if (pass == "0")
+					break;
+				user[sessionNum].changePassword(pass);
+				break;
 			case '0':
 				ans = 0;
 				break;
