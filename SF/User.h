@@ -24,6 +24,7 @@ public:
 	void changePassword(string pass)
 	{
 		_password = pass;
+		cout << "Password changed!" << endl << endl;
 	}
 
 	std::string getName()

@@ -128,7 +128,7 @@ int main() {
 					if (message == "")
 						getline(cin, message);
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					user[recieverNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
+					user[recieverNum].sendMessage(currentUser, reciever, message, countMessage, true);
 
 					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification + 1);
 					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
