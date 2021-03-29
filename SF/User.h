@@ -21,10 +21,21 @@ public:
 	User() = default;
 	~User() = default;
 
-	void changePassword(string pass)
+	void changePassword()
 	{
-		_password = pass;
-		cout << "Password changed!" << endl << endl;
+		string pass, newpass;
+		cout << "Enter 0 to cancel" << endl;
+		cout << "Enter old password: ";
+		cin >> pass;
+		if (pass == "0")
+			return;
+		if (pass == _password) {
+			cout << "Enter new password: ";
+			cin >> newpass;
+			_password = newpass;
+			cout << "Password changed!" << endl << endl;
+		}
+		else { cout << "Incorrect password" << endl << endl; }
 	}
 
 	std::string getName()

@@ -78,7 +78,7 @@ int main() {
 						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
-
+						cout << endl;
 					}
 					else { cout << endl; }
 				}
@@ -193,11 +193,7 @@ int main() {
 				break;
 			case '6':
 				
-				cout << "Password: ";
-				cin >> pass;
-				if (pass == "0")
-					break;
-				user[sessionNum].changePassword(pass);
+				user[sessionNum].changePassword();
 				break;
 			case '0':
 				ans = 0;
