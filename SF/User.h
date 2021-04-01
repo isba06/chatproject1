@@ -1,26 +1,29 @@
 ﻿#pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 #include "Message.h"
-#include <vector>
 using namespace std;
 
 class User
 {
 private:
-	std::string _name;
-	std::string _username;
-	std::string _password;
+	string _name;
+	string _username;
+	string _password;
 	vector<Message> _message;
-	int _notification = 0;
-	int _privateNotification = 0;
+	size_t _notification = 0;
+	size_t _privateNotification = 0;
 	vector <string> _notificationUsername;
 	vector <string> _privateNotificationUsername;
 public:
-	void registr(std::string name, std::string username, std::string password);
+	User(const string& name, const string& username, const string& password) : _name(name), _username(username),  // NOLINT(modernize-pass-by-value)
+	                                                                           _password(password)
+	{
+	}
 	User() = default;
 	~User() = default;
-
+	
 	void changePassword()
 	{
 		string pass, newpass;
@@ -38,35 +41,35 @@ public:
 		else { cout << "Incorrect password" << endl << endl; }
 	}
 
-	std::string getName()
+	std::string getName() const
 	{
 		return _name;
 	}
 
-	std::string getUsername()
+	std::string getUsername() const
 	{
 		return _username;
 	}
 
-	std::string getPassword()
+	std::string getPassword() const
 	{
 		return _password;
 	}
 
-	size_t getMessagesNum() {
+	size_t getMessagesNum() const {
 		return _message.size();
 	}
 
-	void sendMessage(const string sender, const string reciever, const string message, unsigned int countMessage, bool isPrivate);
-	void showPrivateMessage(User& sender);
+	void sendMessage(const string& sender, const string& reciever, const string& message, size_t countMessage, bool isPrivate);
+	void showPrivateMessage(const User& sender);
 	void showMessage();
 
-	int getNotification()
+	size_t getNotification() const
 	{
 		return _notification;
 	}
 
-	int getPrivateNotification()
+	size_t getPrivateNotification() const
 	{
 		return _privateNotification;
 	}
@@ -81,64 +84,61 @@ public:
 		++_privateNotification;
 	}
 
-	void setNotifications(int notif)
+	void setNotifications(const size_t notif)
 	{
 		_notification = notif;
 	}
 
-	void setPrivateNotifications(int notif)
+	void setPrivateNotifications(const size_t notif)
 	{
 		_privateNotification = notif;
 	}
 
-	size_t SizeVectorNotificationUsername()
+	size_t SizeVectorNotificationUsername() const
 	{
 		return _notificationUsername.size();
 	}
 
-	size_t SizeVectorPrivateNotificationUsername()
+	size_t SizeVectorPrivateNotificationUsername() const
 	{
 		return _privateNotificationUsername.size();
 	}
 
-	void ResizeVectorNotificationUsername(int countVector)
+	void ResizeVectorNotificationUsername(const size_t countVector)
 	{
 		_notificationUsername.resize(countVector);
 	}
 
-	void ResizeVectorPrivateNotificationUsername(int countVector)
+	void ResizeVectorPrivateNotificationUsername(const size_t countVector)
 	{
 		_privateNotificationUsername.resize(countVector);
 	}
 
-	void setUsernameNotification(string username, int index)
+	void setUsernameNotification(const string& username, const size_t index)
 	{
 		_notificationUsername[index] = username;
 	}
 
-	void setPrivateUsernameNotification(string username, int index)
+	void setPrivateUsernameNotification(const string& username, const size_t index)
 	{
 		_privateNotificationUsername[index] = username;
 	}
 
-	string getUsernameNotification(int index)
+	string getUsernameNotification(const size_t index)
 	{
 		return _notificationUsername[index];
 	}
 
-	string getPrivateUsernameNotification(int index)
+	string getPrivateUsernameNotification(const size_t index)
 	{
 		return _privateNotificationUsername[index];
 	}
 
-	void deleteUsername(string username) {
-		string tmp;
-		for (int i = 0; i < _privateNotificationUsername.size(); i++) {
-			if (_privateNotificationUsername[i] == username) {
-				_privateNotificationUsername[i] = _privateNotificationUsername[_privateNotificationUsername.size() - 1];
-				_privateNotificationUsername.pop_back();
+	void deleteUsername(const string& username) {
+		for (auto const it = _privateNotificationUsername.begin(); it != _privateNotificationUsername.end(); )
+			if (*it == username) {
+				_privateNotificationUsername.erase(it);
+				break;
 			}
-		}
-
 	}
 };

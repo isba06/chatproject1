@@ -1,17 +1,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "functions.h"
 #include <iostream>
-#include <Windows.h>
 #include <string>
-#include <exception>
 #include <vector>
-#include <algorithm>
 #include <chrono>
-#include <ctime>
 #include <sstream>
 #include <iomanip>
 #include "User.h"
+
+
 
 using namespace std;
 
@@ -32,59 +29,57 @@ void showOptionsLogedIn() {
 		<< "0. Exit" << endl << endl;
 }
 
-bool isBusy(const string& username, vector<User>& user) {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if (username == user[i].getUsername())
+bool isBusy(const string& username, const vector<User>& user) {
+	for (const auto& n : user) 
+		if (username == n.getUsername())
 			return true;
-	}
 	return false;
 }
 
-bool checkPasswordUsername(string username, string password, vector<User>& user)
+bool checkPasswordUsername(const string& username, const string& password, const vector<User>& user)
 {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if ((user[i].getUsername() == username) && (user[i].getPassword() == password))
+	for (const auto& n : user)
+		if ((n.getUsername() == username) && (n.getPassword() == password))
 			return true;
-	}
-	return false;
+
 	cout << "Incorrect username or password" << endl << endl;
+	return false;
+
 }
 
-int getIndexUser(string username, vector<User>& user)
+size_t getIndexUser(const string& username, vector<User>& user)
 {
-	for (unsigned int i = 0; i < user.size(); i++) {
-		if ((user[i].getUsername() == username))
+	for (size_t i = 0; i < user.size(); i++) {
+		if (!(user[i].getUsername().compare(username)))
 			return i;
 	}
-	return -1;
+	return 0; // было -1, но это небезопасно
 }
 
 
-string findUser(const string& username, vector<User>& user) {
-	string reciever;
-	for (unsigned int i = 0; i < user.size(); i++) {
-		reciever = user[i].getUsername();
-		if (reciever == username) {
-			return reciever;
-		}
-	}
+string& findUser(const string& username, const vector<User>& user) {
+
+	for (const auto& n : user)
+		if (n.getUsername() == username) 
+			return username;
+
 	return "Not found";
 }
 
-int findSessionNum(vector<User>& user, const string& userSession) {
-	for (unsigned int i = 0; i < user.size(); i++) {
+size_t findSessionNum(vector<User>& user, const string& userSession) {
+	for (size_t i = 0; i < user.size(); i++) {
 		if (user[i].getUsername() == userSession)
 			return i;
 	}
-	return -1;
+	return 0; // было -1, но это небезопасно
 }
 
 string getTime() {
-	auto now = std::chrono::system_clock::now();
+	const auto now = std::chrono::system_clock::now();
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
 
 	stringstream ss;
-	struct tm* ptm = localtime(&in_time_t);
+	auto *const ptm = localtime(&in_time_t);
 	ss << put_time(ptm, "%d-%m-%y %R");
 	return ss.str();
 }

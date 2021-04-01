@@ -9,22 +9,22 @@ private:
 	string _addressee;
 	string _message;
 	string _time;
-	bool _isPrivateMessage;
+	bool _isPrivateMessage {false};
 public:
-	string getSender();
-	string getAddressee();
-	string getMessage();
-	string getTime();
-	void setSender(string sender);
-	void setAddressee(string addressee);
-	void setMessage(string message);
-	void setTime(string time);
-	void setIsPrivateMessage(bool isPrivateMessage)
+	string getSender() const;
+	string getAddressee() const;
+	string getMessage() const;
+	string getTime() const;
+	void setSender(const string& sender);
+	void setAddressee(const string& addressee);
+	void setMessage(const string& message);
+	void setTime(const string& time);
+	void setIsPrivateMessage(const bool isPrivateMessage)
 	{
 		_isPrivateMessage = isPrivateMessage;
 	}
 
-	bool getIsPrivateMessage()
+	bool getIsPrivateMessage() const
 	{
 		return _isPrivateMessage;
 	}

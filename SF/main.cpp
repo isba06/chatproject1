@@ -3,13 +3,8 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
-#include <exception>
 #include <vector>
-#include <algorithm>
-#include <chrono>
-#include <ctime>
 #include <sstream>
-#include <iomanip>
 #include "User.h"
 #include "functions.h"
 using namespace std;
@@ -19,19 +14,18 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	string tmpUsername, tmpName, tmpPassword, reciever = "", sender, message, currentUser, notif;
-	char ans;
-	unsigned int count = 0, size = 0, sessionNum = -1, countMessage = 0, recieverNum, countPrivateNotification = 0, countNotification = 0, notifNum;
-	bool logedIn = false;
-	vector<User> user(size);
-	string pass;
+	string tmpUsername, tmpName, tmpPassword, reciever, sender, message, currentUser;
+	char ans {0};
+	size_t countMessage {0}, countPrivateNotification {0}, countNotification {0};
+	size_t sessionNum {0}, notifNum {0}, recieverNum {0} ;
+	bool logedIn {false};
+	vector<User> user;
 
 	do {
 		//меню и действия до авторизцаии
 		if (!logedIn) {
 
 			showOptions();
-			sessionNum = -1;
 			cout << "Select action: ";
 			cin >> ans;
 			cout << endl;
@@ -44,6 +38,7 @@ int main() {
 
 				cout << "Input username: ";
 				cin >> tmpUsername;
+				
 				if (isBusy(tmpUsername, user)) {
 					cout << "This username is already taken" << endl << endl;
 					break;
@@ -53,8 +48,7 @@ int main() {
 				cin >> tmpPassword;
 				cout << endl;
 
-				user.resize(++size);
-				user[count++].registr(tmpName, tmpUsername, tmpPassword);
+				user.emplace_back(User(tmpName, tmpUsername, tmpPassword));
 				break;
 
 			case '2':
@@ -73,11 +67,11 @@ int main() {
 					if (notifNum) {
 						cout << "from:" << endl;
 						//уведомления личных сообщений
-						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorPrivateNotificationUsername(); i++) {
+						for (size_t i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorPrivateNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getPrivateUsernameNotification(i) << endl;
 						}
 						//уведомления групповых
-						for (int i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
+						for (size_t i = 0; i < user[getIndexUser(currentUser, user)].SizeVectorNotificationUsername(); i++) {
 							cout << "-" << user[getIndexUser(currentUser, user)].getUsernameNotification(i) << endl;
 						}
 						cout << endl;
@@ -117,7 +111,7 @@ int main() {
 
 				if (reciever == "Not found") {
 					cout << "User not found" << endl << endl;
-					reciever = "";
+					reciever.clear();
 					break;
 				}
 				recieverNum = findSessionNum(user, reciever);
@@ -127,22 +121,22 @@ int main() {
 					cout << getTime() << " | " << "You: ";
 					getline(cin, message);
 					if (message == "-e") {
-						message = "";
+						message.clear();
 						break;
 					}
-					if (message == "")
+					if (message.empty())
 						getline(cin, message);
 					//запись в поле(вектор класса messege) и отправителю и получателю
 					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
 					user[recieverNum].sendMessage(currentUser, reciever, message, countMessage, true);
 
-					user[recieverNum].ResizeVectorPrivateNotificationUsername(countPrivateNotification + 1);
+					user[recieverNum].ResizeVectorPrivateNotificationUsername(++countPrivateNotification);
 					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
 				}
 				user[recieverNum].addPrivateNotifications();
 				++countPrivateNotification;
 				cout << endl;
-				message = "";
+				message.clear();
 				break;
 
 				//отправка сообщений всем участникам
@@ -152,16 +146,16 @@ int main() {
 					cout << getTime() << " | " << "You: ";
 					getline(cin, message);
 					if (message == "-e") {
-						message = "";
+						message.clear();
 						break;
 					}
-					if (message == "")
+					if (message.empty())
 						getline(cin, message);
 					for (unsigned int i = 0; i < user.size(); i++) {
 						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
 						if (i != sessionNum) {
 							user[i].addNotifications();
-							user[i].ResizeVectorNotificationUsername(countNotification + 1);
+							user[i].ResizeVectorNotificationUsername(++countNotification);
 							user[i].setUsernameNotification("Group:: " + user[sessionNum].getUsername(), countNotification);
 						}
 						else { continue; }
@@ -180,7 +174,7 @@ int main() {
 				sender = findUser(tmpUsername, user);
 				if (sender == "Not found") {
 					cout << "User not found" << endl << endl;
-					sender = "";
+					sender.clear();
 					break;
 				}
 				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
