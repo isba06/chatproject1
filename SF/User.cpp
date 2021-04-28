@@ -6,14 +6,15 @@
 
 
 
-void User::sendMessage(const string& sender, const string& reciever, const string& message, size_t countMessage, bool isPrivate)
+void User::sendMessage(const string& sender, const string& reciever, const string& message, bool isPrivate)
 {
-	_message.resize(countMessage);
-	_message[countMessage - 1].setSender(sender);
-	_message[countMessage - 1].setAddressee(reciever);
-	_message[countMessage - 1].setMessage(message);
-	_message[countMessage - 1].setTime(getTime());
-	_message[countMessage - 1].setIsPrivateMessage(isPrivate);
+	Message a;
+	_message.push_back(a);
+	_message.back().setSender(sender);
+	_message.back().setAddressee(reciever);
+	_message.back().setMessage(message);
+	_message.back().setTime(getTime());
+	_message.back().setIsPrivateMessage(isPrivate);
 }
 
 void User::showPrivateMessage(const User& sender) {

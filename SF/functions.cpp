@@ -57,13 +57,13 @@ size_t getIndexUser(const string& username, vector<User>& user)
 }
 
 
-string& findUser(const string& username, const vector<User>& user) {
+string& findUser(string& username, const vector<User>& user) {
 
 	for (const auto& n : user)
 		if (n.getUsername() == username) 
 			return username;
-
-	return "Not found";
+	string n = "Not found";
+	return n;
 }
 
 size_t findSessionNum(vector<User>& user, const string& userSession) {

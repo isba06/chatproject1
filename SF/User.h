@@ -23,7 +23,11 @@ public:
 	}
 	User() = default;
 	~User() = default;
-	
+
+	void sendMessage(const string& sender, const string& reciever, const string& message, bool isPrivate);
+	void showPrivateMessage(const User& sender);
+	void showMessage();
+
 	void changePassword()
 	{
 		string pass, newpass;
@@ -40,6 +44,13 @@ public:
 		}
 		else { cout << "Incorrect password" << endl << endl; }
 	}
+
+
+	void pusch_back_NotificationUsername(const string& username)
+	{
+		_privateNotificationUsername.push_back(username);
+	}
+
 
 	std::string getName() const
 	{
@@ -60,9 +71,6 @@ public:
 		return _message.size();
 	}
 
-	void sendMessage(const string& sender, const string& reciever, const string& message, size_t countMessage, bool isPrivate);
-	void showPrivateMessage(const User& sender);
-	void showMessage();
 
 	size_t getNotification() const
 	{

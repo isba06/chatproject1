@@ -16,7 +16,7 @@ int main() {
 
 	string tmpUsername, tmpName, tmpPassword, reciever, sender, message, currentUser;
 	char ans {0};
-	size_t countMessage {0}, countPrivateNotification {0}, countNotification {0};
+	size_t countMessage {0}, indexPrivateNotification {0}, countNotification {0};
 	size_t sessionNum {0}, notifNum {0}, recieverNum {0} ;
 	bool logedIn {false};
 	vector<User> user;
@@ -127,14 +127,13 @@ int main() {
 					if (message.empty())
 						getline(cin, message);
 					//запись в поле(вектор класса messege) и отправителю и получателю
-					user[sessionNum].sendMessage(currentUser, reciever, message, ++countMessage, true);
-					user[recieverNum].sendMessage(currentUser, reciever, message, countMessage, true);
-
-					user[recieverNum].ResizeVectorPrivateNotificationUsername(++countPrivateNotification);
-					user[recieverNum].setPrivateUsernameNotification(user[sessionNum].getUsername(), countPrivateNotification);
+					user[sessionNum].sendMessage(currentUser, reciever, message, true);
+					user[recieverNum].sendMessage(currentUser, reciever, message, true);
 				}
-				user[recieverNum].addPrivateNotifications();
-				++countPrivateNotification;
+
+				user[recieverNum].pusch_back_NotificationUsername(user[sessionNum].getUsername());
+				user[recieverNum].addPrivateNotifications(); 
+				++indexPrivateNotification;
 				cout << endl;
 				message.clear();
 				break;
@@ -152,7 +151,7 @@ int main() {
 					if (message.empty())
 						getline(cin, message);
 					for (unsigned int i = 0; i < user.size(); i++) {
-						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, ++countMessage, false);
+						user[i].sendMessage(user[sessionNum].getUsername(), user[i].getUsername(), message, false);
 						if (i != sessionNum) {
 							user[i].addNotifications();
 							user[i].ResizeVectorNotificationUsername(++countNotification);
@@ -178,7 +177,7 @@ int main() {
 					break;
 				}
 				user[sessionNum].showPrivateMessage(user[findSessionNum(user, sender)]);
-				user[sessionNum].setPrivateNotifications(--countPrivateNotification);
+				user[sessionNum].setPrivateNotifications(--indexPrivateNotification);
 				user[sessionNum].deleteUsername(sender);
 				break;
 
