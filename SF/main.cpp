@@ -79,7 +79,7 @@ int main() {
 					else { cout << endl; }
 				}
 				else {
-					cout << "Incorrect username or password" << endl;
+					cout << "Incorrect username or password" << endl << endl;
 				}
 				break;
 			case '0':

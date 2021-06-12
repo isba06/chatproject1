@@ -42,7 +42,6 @@ bool checkPasswordUsername(const string& username, const string& password, const
 		if ((n.getUsername() == username) && (n.getPassword() == password))
 			return true;
 
-	cout << "Incorrect username or password" << endl << endl;
 	return false;
 
 }
